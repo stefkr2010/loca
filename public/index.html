@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Deel je locatie</title>
+  <style>
+    body { font-family: sans-serif; padding: 1rem; }
+    button { padding: 0.5rem 1rem; font-size: 1rem; }
+    #status { margin-top: 1rem; color: #333; }
+  </style>
+</head>
+<body>
+  <h1>Deel je locatie</h1>
+  <p>Klik op de knop om je locatie te delen (je moet toestemming geven).</p>
+  <button id="shareBtn">Deel mijn locatie</button>
+  <p id="status"></p>
+
+<script>
+const btn = document.getElementById('shareBtn');
+const status = document.getElementById('status');
+
+btn.addEventListener('click', async () => {
+  if (!navigator.geolocation) {
+    status.textContent = 'Geolocatie wordt niet ondersteund door deze browser.';
+    return;
+  }
+
+  status.textContent = 'Locatie ophalen...';
+
+  navigator.geolocation.getCurrentPosition(async (pos) => {
+    const latitude = pos.coords.latitude;
+    const longitude = pos.coords.longitude;
+
+    status.textContent = `Locatie gevonden: ${latitude.toFixed(6)}, ${longitude.toFixed(6)} — verzenden...`;
+
+    try {
+      const resp = await fetch('/report-location', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ latitude, longitude, label: 'Website bezoeker' })
+      });
+      const data = await resp.json();
+      if (data.ok) {
+        status.textContent = 'Locatie succesvol gedeeld ✔';
+      } else {
+        status.textContent = 'Serverfout bij opslaan locatie.';
+      }
+    } catch (err) {
+      status.textContent = 'Fout bij verzenden: ' + err.message;
+    }
+  }, (err) => {
+    switch (err.code) {
+      case err.PERMISSION_DENIED:
+        status.textContent = 'Je hebt de locatie aanvraag geweigerd.';
+        break;
+      case err.POSITION_UNAVAILABLE:
+        status.textContent = 'Locatie onbeschikbaar.';
+        break;
+      case err.TIMEOUT:
+        status.textContent = 'Tijd verstreken bij ophalen locatie.';
+        break;
+      default:
+        status.textContent = 'Onbekende fout bij geolocatie.';
+    }
+  }, { enableHighAccuracy: false, timeout: 10000 });
+});
+</script>
+</body>
+</html>

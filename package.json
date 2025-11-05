@@ -1,0 +1,15 @@
+{
+  "name": "geolocation-dashboard",
+  "version": "1.0.0",
+  "description": "Simple geolocation sharing demo (requires user consent). Node.js + Express + Leaflet",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2"
+  }
+}
