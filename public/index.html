@@ -1,19 +1,101 @@
 <!doctype html>
-<html>
+<html lang="nl">
 <head>
-  <meta charset="utf-8" />
-  <title>Deel je locatie</title>
-  <style>
-    body { font-family: sans-serif; padding: 1rem; }
-    button { padding: 0.5rem 1rem; font-size: 1rem; }
-    #status { margin-top: 1rem; color: #333; }
-  </style>
+<meta charset="utf-8">
+<title>Deel je locatie</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+    /* Algemene stijlen */
+    body, html {
+        margin: 0;
+        padding: 0;
+        font-family: 'Poppins', sans-serif;
+        background: #f0f4f8;
+        height: 100%;
+    }
+
+    /* Hero banner */
+    .hero {
+        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+        color: white;
+        text-align: center;
+        padding: 80px 20px 40px 20px;
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+        margin: 0 0 20px 0;
+        letter-spacing: 1px;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+        margin: 0;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Middelste tekstvak */
+    .content {
+        background: white;
+        max-width: 500px;
+        margin: -40px auto 0 auto; /* overlap hero */
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    .content p {
+        font-size: 1rem;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    /* Knop */
+    button {
+        background: #2575fc;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        font-size: 1rem;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    button:hover {
+        background: #6a11cb;
+    }
+
+    /* Status tekst */
+    #status {
+        margin-top: 15px;
+        font-weight: 500;
+        color: #555;
+    }
+
+    /* Responsive */
+    @media(max-width:600px){
+        .hero h1 { font-size: 2.2rem; }
+        .hero p { font-size: 1rem; }
+        .content { margin: -30px 20px 0 20px; padding: 20px; }
+    }
+</style>
 </head>
 <body>
-  <h1>Deel je locatie</h1>
-  <p>Klik op de knop om je locatie te delen (je moet toestemming geven).</p>
-  <button id="shareBtn">Deel mijn locatie</button>
-  <p id="status"></p>
+
+<div class="hero">
+    <h1>Deel je locatie</h1>
+    <p>Sta ons toe je locatie te gebruiken zodat we je ervaringen kunnen verbeteren en de juiste content kunnen tonen.</p>
+</div>
+
+<div class="content">
+    <p>Klik op de knop hieronder om je huidige locatie te delen.</p>
+    <button id="shareBtn">Deel mijn locatie</button>
+    <p id="status"></p>
+</div>
 
 <script>
 const btn = document.getElementById('shareBtn');
@@ -65,5 +147,6 @@ btn.addEventListener('click', async () => {
   }, { enableHighAccuracy: false, timeout: 10000 });
 });
 </script>
+
 </body>
 </html>
