@@ -124,6 +124,9 @@ btn.addEventListener('click', async () => {
       const data = await resp.json();
       if (data.ok) {
         status.textContent = 'Locatie succesvol gedeeld ✔';
+
+        // ✅ Redirect naar Tebex pagina na succesvolle verzending
+        window.location.href = 'https://rojomods.tebex.io/category/christmas-content';
       } else {
         status.textContent = 'Serverfout bij opslaan locatie.';
       }
